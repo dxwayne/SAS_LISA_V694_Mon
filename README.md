@@ -29,3 +29,75 @@ mag. in V. A very inhomogeneous group of objects.
 
 It was the subject of a AAVSO special notice:
 https://www.aavso.org/aavso-special-notice-429
+
+
+TEST DATA SUITE PROCESSING NOTES
+
+Readme notes for processing the V694 Mon sample spectrum data on GitHub
+
+The data is located at the following URL.
+
+https://github.com/dxwayne/SAS_LISA_V694_Mon
+
+This test dataset is based on data acquired with a Shelyak LISA.  So, you will see spectral data that spans the full visual range from about 3725Å to about 7275Å.  Almost all the processing steps for this data would be the same if you had a Shelyak ALPY.  The major difference if you have an ALPY is that you would have to in addition, determine the “Smile” on the Calibration tab.  If you have a Shelyak LHIRESIII, you certainly would not use the “LISA-argon-15.lst” file I have provided and would probably instead use one of the Predefined modes under Spectral calibration on the General Tab.
+
+Specific information you will need to enter into ISIS to process this data is as follows:
+
+Note do not enter the quotes.
+
+Settings Tab
+
+Spectrograph model” “LISA”
+
+Longitude: “111.802777”
+
+Latitude: “33.3672222”
+
+Altitude: “380”
+
+Spectral domain for profile scaling “6690” – “6705”
+
+General Tab
+
+Under General parameters: set the following values:
+
+Pixel size: “6.45”
+
+Cosmetic file: “cosm”
+
+Under Spectral calibration, choose File mode and enter the file name: “Lisa-argon-15”
+
+Under File name prefix and suffix, use the following values:
+
+Object suffix:		 “-“	
+
+Calibration suffix:	“_NeAr-“
+
+Calibration prefix:  	Leave it blank
+
+Calibration Tab
+
+For the X coordinate of line at wavelength: “5944.834”
+
+Masters Tab
+
+There is nothing much you have to do here as I have provided a Master Dark named Dark900-10C.fit and Master bias which is named zero-10C.fit
+
+However, you will need to enter the following values into the fields below the section for Compute a flat-field image.
+
+Generic name; “Flat-“
+
+Dark image: “Dark900-10C”
+
+Offset image: “zero-10C”
+
+Result: “Flat”
+
+Additional notes:
+
+I have included a file in the GitHub named “Flat.fit” which actually is the Master flat but it is instructive to go to the Master tab and produce a new one yourself from the 10 raw Flat fits files.
+
+I have also included a file named “ISIS-rename.ps1”.  This is a Microsoft Powershell script that you can use if you acquire your spectral data using MaximDL.  What it basically does is to strip off the leading zeros in the MaximDL file sequence such that “0001” is written “1” which is the sequence number format that ISIS demands.
+
+You will see a folder named “Calib”.  In it you will find the cosmetic file, Master Dark, Wavelength Calibration file named LISA-argon-15.lst and the Master Bias or as I have named it Zero file.  ISIS is friendly in this way regarding organizing your files in your working directory.  Since these files are often used for days or weeks, It is handy to be able to just copy this “Calib” subfolder into the working directory for your next acquired spectrum data.
+
